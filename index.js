@@ -3,7 +3,6 @@ import Gen from './lib/gen';
 import words from './data/five.json'
 
 
-console.log("starting");
 
 // let gen = new Gen(words, 5, 5);
 
@@ -21,9 +20,11 @@ let testwords = [
 ]
 
 let gen = new Gen(testwords)
+//
+// let across = [" mit ", "zebra", "idiom"];
+// let down = [" zig ", "medic"]
+//
+// let matching = gen.findNextMatchingDown(across, down);
+// //expect matching to be ['ibiza']
 
-let across = [" mit ", "zebra", "idiom"];
-let down = [" zig ", "medic"]
-
-let matching = gen.findNextMatchingDown([], []);
-console.log(matching);
+gen.recurse([],[])
