@@ -11,10 +11,15 @@ export default function wordcount(words, filename){
     let output = []
     for(let i = 0; i< words.length; i++){
       let word = words[i];
-      console.log(word);
       let result = yield request(baseurl+word);
-      if(result.substr(11, 1)==='y'){
+      result = result.substr(11, 1)==='y';
+
+      console.log(word, result);
+
+      if(result){
         output.push(word);
+        //this line is a waste of time but its good for me.
+        fs.writeFileSync(filename, JSON.stringify(output, null, 2))
       }
     }
     fs.writeFileSync(filename, JSON.stringify(output, null, 2))
