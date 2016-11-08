@@ -1,22 +1,30 @@
 import cp from 'child_process'
 
 let file = process.argv[2];
+let clusters = process.argv[3]||3;
 
 console.log("clustering", file);
 
 let words = require('../data/'+file+'.json');
+let i = 0;
 
-let word = words[0];
-let ps = cp.fork('./cluster/process', [word, file])
-ps.on('close', (code) => {
-  console.log("closed", code);
-})
-//
-// word = words[1];
-// cp.fork('./cluster/process', [word, file])
-//
-// word = words[2];
-// cp.fork('./cluster/process', [word, file])
+function spawn(){
+  let word = words[i++];
+  if(word){
+    let ps = cp.fork('./cluster/process', [word, file])
+    ps.on('close', (code) => {
+      console.log("thread closed", code);
+      spawn();
+    });
+  }
+}
+
+for(let x=0;x<clusters; x++){spawn();}
+
+// spawn();
+// spawn();
+// spawn();
+// spawn();
 
 
-console.log("clusterdone");
+console.log("cluster started");
