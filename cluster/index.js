@@ -5,7 +5,7 @@ let clusters = process.argv[3]||3;
 
 console.log("clustering", file);
 
-let words = require('../data/'+file+'.json');
+let words = require('../data/'+file+'.json').sort(() => {return Math.random()-.05});
 let i = 0;
 
 function spawn(){

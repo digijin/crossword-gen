@@ -14,8 +14,17 @@ let gen = new Gen(words, 5);
 
 // gen.generate();
 // console.log(gen.results.length, 'results');
-gen.recurse([word],[])
+
 if(!fs.existsSync('./out')) fs.mkdirSync('./out');
+
 let path = './out/'+file+'/'
 if(!fs.existsSync(path)) fs.mkdirSync(path);
-fs.writeFileSync(path+word+'.json', JSON.stringify(gen.results, null, 2));
+
+let filename = path+word+'.json';
+
+if(fs.existsSync(filename)){
+  console.log("skipping", word);
+}else{
+  gen.recurse([word],[])
+  fs.writeFileSync(filename, JSON.stringify(gen.results, null, 2));
+}
